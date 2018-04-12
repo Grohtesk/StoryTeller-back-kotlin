@@ -1,11 +1,13 @@
 package fr.deponf.storyteller.model.service
 
 import fr.deponf.storyteller.model.Protagonist
+import fr.deponf.storyteller.model.Story
 import fr.deponf.storyteller.service.StoryService
 import fr.deponf.storyteller.model.StoryTellerTestWithFongo
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class StorytellerServiceTest : StoryTellerTestWithFongo() {
 
@@ -22,15 +24,23 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 
 	@Test
 	fun testStoryUpdate() {
-		STORY_1.pitch="Cool story, bro"
-		storyService.save(STORY_1)
-		assertEquals("Cool story, bro", storyService.findByTitle(STORY_1.title)?.pitch)
+		var story: Story? = storyService.findByTitle(STORY_1.title)
+		assertNotNull(story,"no story found with title ${STORY_1.title}")
+		if(story!=null) {
+			story.pitch = "Cool story, bro"
+			storyService.save(story)
+			assertEquals("Cool story, bro", storyService.findByTitle(STORY_1.title)?.pitch)
+		}
 	}
 
 	@Test
 	fun testAddProtagonist() {
-		STORY_1.protagonists += Protagonist("Chorum", "Le dévoreur")
-		storyService.save(STORY_1)
-		assertEquals(2,storyService.findByTitle(STORY_1.title)?.protagonists?.size)
+		var story: Story? = storyService.findByTitle(STORY_1.title)
+		assertNotNull(story,"no story found with title ${STORY_1.title}")
+		if(story!=null) {
+			story.protagonists += Protagonist("Chorum", "Le dévoreur")
+			storyService.save(story)
+			assertEquals(2, storyService.findByTitle(STORY_1.title)?.protagonists?.size)
+		}
 	}
 }
