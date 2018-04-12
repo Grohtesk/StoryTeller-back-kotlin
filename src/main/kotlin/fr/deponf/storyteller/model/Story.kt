@@ -14,8 +14,6 @@ data class Story (
     override fun toString() = "titre: $title, protagonists : "+protagonists.count()
 }
 
-data class Protagonist (val name: String, val lastName: String? = null, val firstName: String? = null )
-
 data class Map (val regions: List<String>,var locations: List<Location>)
 
 data class Timeline (var events: List<Event> = ArrayList())

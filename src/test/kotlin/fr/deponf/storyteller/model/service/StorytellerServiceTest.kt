@@ -43,4 +43,26 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 			assertEquals(2, storyService.findByTitle(STORY_1.title)?.protagonists?.size)
 		}
 	}
+
+	@Test
+	fun testUpdateProtagonist() {
+		var story = storyService.findByTitle(STORY_2.title)
+		assertNotNull(story,"no story found with title ${STORY_1.title}")
+		if(story!=null) {
+			story.protagonists.first().description="A fallen angel"
+			storyService.save(story)
+			assertEquals("A fallen angel",storyService.findByTitle(STORY_2.title)?.protagonists?.first()?.description)
+		}
+	}
+
+	@Test
+	fun testUpdateProtagonistGender() {
+		var story = storyService.findByTitle(STORY_2.title)
+		assertNotNull(story,"no story found with title ${STORY_1.title}")
+		if(story!=null) {
+			story.protagonists.first().gender=Protagonist.Gender.MALE
+			storyService.save(story)
+			assertEquals(Protagonist.Gender.MALE,storyService.findByTitle(STORY_2.title)?.protagonists?.first()?.gender)
+		}
+	}
 }
