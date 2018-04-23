@@ -1,9 +1,7 @@
 package fr.deponf.storyteller.model.service
 
-import fr.deponf.storyteller.model.Protagonist
-import fr.deponf.storyteller.model.Story
+import fr.deponf.storyteller.model.*
 import fr.deponf.storyteller.service.StoryService
-import fr.deponf.storyteller.model.StoryTellerTestWithFongo
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import kotlin.test.assertEquals
@@ -65,4 +63,16 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 			assertEquals(Protagonist.Gender.MALE,storyService.findByTitle(STORY_2.title)?.protagonists?.first()?.gender)
 		}
 	}
+
+    @Test
+    fun testUpdateTimeline() {
+        var story = storyService.findByTitle(STORY_3.title)
+        assertNotNull(story,"no story found with title ${STORY_3.title}")
+        if(story!=null) {
+            val description = "Under King Baratheon's command, Edd Stark leaves winterfell with Arya and Sansa. They bgin their journey to kingslanding"
+            story.timeline.addEvent(Event(summary = "The starks leaves Winterfell", description = description, location = Location(name = "Winterfell", x = 1, y = 1), time = 0))
+            storyService.save(story)
+            assertEquals(1,storyService.findByTitle(STORY_3.title)?.timeline?.events?.size)
+        }
+    }
 }
