@@ -22,7 +22,7 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 
 	@Test
 	fun testStoryUpdate() {
-		var story: Story? = storyService.findByTitle(STORY_1.title)
+		val story: Story? = storyService.findByTitle(STORY_1.title)
 		assertNotNull(story,"no story found with title ${STORY_1.title}")
 		if(story!=null) {
 			story.pitch = "Cool story, bro"
@@ -33,7 +33,7 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 
 	@Test
 	fun testAddProtagonist() {
-		var story: Story? = storyService.findByTitle(STORY_1.title)
+		val story: Story? = storyService.findByTitle(STORY_1.title)
 		assertNotNull(story,"no story found with title ${STORY_1.title}")
 		if(story!=null) {
 			story.protagonists += Protagonist("Chorum", "Le dévoreur")
@@ -44,7 +44,7 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 
 	@Test
 	fun testUpdateProtagonist() {
-		var story = storyService.findByTitle(STORY_2.title)
+		val story = storyService.findByTitle(STORY_2.title)
 		assertNotNull(story,"no story found with title ${STORY_1.title}")
 		if(story!=null) {
 			story.protagonists.first().description="A fallen angel"
@@ -55,7 +55,7 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 
 	@Test
 	fun testUpdateProtagonistGender() {
-		var story = storyService.findByTitle(STORY_2.title)
+		val story = storyService.findByTitle(STORY_2.title)
 		assertNotNull(story,"no story found with title ${STORY_1.title}")
 		if(story!=null) {
 			story.protagonists.first().gender=Protagonist.Gender.MALE
@@ -66,7 +66,7 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 
     @Test
     fun testUpdateTimeline() {
-        var story = storyService.findByTitle(STORY_3.title)
+        val story = storyService.findByTitle(STORY_3.title)
         assertNotNull(story,"no story found with title ${STORY_3.title}")
         if(story!=null) {
             val description = "Under King Baratheon's command, Edd Stark leaves winterfell with Arya and Sansa. They bgin their journey to kingslanding"
@@ -75,4 +75,14 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
             assertEquals(1,storyService.findByTitle(STORY_3.title)?.timeline?.events?.size)
         }
     }
+
+	@Test
+	fun testGetId() {
+		assertNotNull(storyService.findByTitle(STORY_1.title)?.id, "Id should not be null")
+	}
+
+	@Test
+	fun testFindById() {
+		assertEquals(STORY_2.title,storyService.findById(STORY_2.id)?.title, "could not find Story from Id: ${STORY_2.id}")
+	}
 }
