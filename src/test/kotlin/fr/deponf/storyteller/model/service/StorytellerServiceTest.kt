@@ -13,8 +13,13 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 	lateinit var storyService: StoryService
 
 	@Test
-	fun testStoryCreation() {
+	fun testStoryCreationWithoutProtagonist() {
 		assertEquals(STORY_1, storyService.findByTitle("Sha Do"),"not the same story")
+	}
+
+	@Test
+	fun testStoryCreationWithProtagonist() {
+		assertEquals(STORY_2, storyService.findByTitle("3 mermaids"),"not the same story")
 		assertEquals("Mira", storyService.findByTitle(STORY_2.title)
 				?.protagonists?.first()?.name)
 		assertEquals(3, storyService.findByTitle(STORY_2.title)?.protagonists?.size)
@@ -36,7 +41,7 @@ class StorytellerServiceTest : StoryTellerTestWithFongo() {
 		val story: Story? = storyService.findByTitle(STORY_1.title)
 		assertNotNull(story,"no story found with title ${STORY_1.title}")
 		if(story!=null) {
-			story.protagonists += Protagonist("Chorum", "Le dévoreur")
+			story.protagonists += Protagonist(firstName = "Chorum", lastName = "Le dévoreur")
 			storyService.save(story)
 			assertEquals(2, storyService.findByTitle(STORY_1.title)?.protagonists?.size)
 		}

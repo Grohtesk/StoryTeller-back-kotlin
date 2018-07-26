@@ -28,8 +28,8 @@ abstract class StoryTellerTestWithFongo(val initializeTestData: Boolean = true){
     }
 
     companion object {
-        val STORY_1 = Story(title = "Sha Do", protagonists = listOf(Protagonist("Ameth")))
-        val STORY_2 = Story(title = "3 mermaids", protagonists = listOf(Protagonist("Mira"), Protagonist("Lylia"), Protagonist("Sha")))
-        val STORY_3 = Story(title = "Game of Thrones", protagonists = listOf(Protagonist("Arya Stark")))
+        val STORY_1 = Story(title = "Sha Do")
+        val STORY_2 = Story(title = "3 mermaids", protagonists = listOf(Protagonist(name = "Mira"), Protagonist(name = "Lylia"), Protagonist(name = "Sha")))
+        val STORY_3 = Story(title = "Game of Thrones", protagonists = listOf(Protagonist(name = "Arya Stark")))
     }
 }
