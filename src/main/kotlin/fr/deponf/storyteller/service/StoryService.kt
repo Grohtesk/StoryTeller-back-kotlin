@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 
 
 interface StoryService {
-    fun save(story: Story):Story
-    fun findByTitle(title: String):Story?
+    fun save(story: Story): Story
+    fun findByTitle(title: String): Story?
     fun findAll(): List<Story>
     fun findById(id: ObjectId): Story?
 }
